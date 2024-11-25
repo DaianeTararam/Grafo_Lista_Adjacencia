@@ -1,143 +1,29 @@
-# Grafo Lista em Java
+# Grafo com Lista de Adjacência
 
-Este projeto implementa um **Grafo** utilizando **listas de adjacência** em Java, permitindo a manipulação de nós e arestas. O projeto segue o padrão **MVC (Model-View-Controller)** para separar as responsabilidades de controle, visualização e dados.
-
----
+Este projeto implementa um **grafo não direcionado** utilizando listas de adjacência. Ele permite adicionar e remover arestas, bem como remover nós do grafo. O código é organizado de forma a demonstrar os métodos principais para manipulação de grafos.
 
 ## Estrutura do Projeto
 
-O projeto é organizado em três pacotes principais:
-
-1. **`view`**: Contém a classe principal, responsável por executar o programa.
-2. **`controller`**: Controla as operações no grafo, manipulando as ações de adicionar/remover arestas.
-3. **`model.estrutura.grafo`**: Contém a implementação do grafo usando listas de adjacência.
+O projeto é organizado em uma classe principal para manipulação de grafos e uma estrutura de grafo usando listas de adjacência.
 
 ---
 
-## Classes e Métodos
+## Funcionalidades
 
-### 1. **`view.GrafoPrincipal`**
+### 1. **Adicionar Aresta**
+O método `adicionarAresta` permite adicionar uma conexão (aresta) entre dois nós. 
 
-Classe principal que executa o programa.
+### 2. **Remover Aresta**
+O método `removerAresta` remove a aresta entre dois nós no grafo. O código garante que a remoção seja feita em ambas as direções, já que o grafo é **não direcionado**.
 
-- **Função principal `main`**:
-  - Instancia o controlador do grafo (`GrafoListaController`).
-  - Exemplo de execução:
-    ```java
-    try {
-        String resultado = controller.teste();
-        System.out.println("O resultado do grafo é: " + resultado);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    ```
-  - **Uso do try-catch**:
-    - Lida com possíveis erros durante a execução do programa, exibindo-os no console.
-
----
-
-### 2. **`controller.GrafoListaController`**
-
-Controla as operações realizadas no grafo.
-
-- **Método `teste`**:
-  - Cria um grafo e adiciona algumas arestas.
-  - Exemplo de uso:
-    ```java
-    GrafoLista<Integer> g = new GrafoLista<Integer>();
-    g.adicionarAresta(0, 1);
-    g.adicionarAresta(1, 2);
-    g.adicionarAresta(3, 4);
-    return g.toString();
-    ```
-  - **Objetivo**:
-    - Testa a funcionalidade de adição de arestas e impressão do grafo.
-
----
-
-### 3. **`model.estrutura.grafo.GrafoLista`**
-
-Classe principal que define a estrutura do grafo usando listas de adjacência.
-
-#### Atributos:
-- `Map<Integer, List<Integer>> adjacencia`: Representa o grafo com listas de adjacência, onde cada chave é um nó e o valor é uma lista dos nós adjacentes.
-
-#### Métodos principais:
-- **`adicionarAresta(int origem, int destino)`**:
-  - Adiciona uma aresta entre dois nós.
-  - Se os nós não existirem, eles são criados.
-  - Exemplo:
-    ```java
-    adjacencia.computeIfAbsent(origem, k -> new ArrayList<>()).add(destino);
-    adjacencia.computeIfAbsent(destino, k -> new ArrayList<>()).add(origem);
-    ```
-
-- **`removerAresta(int origem, int destino)`**:
-  - Remove a aresta entre dois nós.
-  - Verifica se os nós existem antes de tentar remover a aresta.
-  - Exemplo:
-    ```java
-    if (adjacencia.containsKey(origem)) {
-        adjacencia.get(origem).remove(Integer.valueOf(destino));
-    }
-    if (adjacencia.containsKey(destino)) {
-        adjacencia.get(destino).remove(Integer.valueOf(origem));
-    }
-    ```
-
-- **`toString()`**:
-  - Exibe o grafo no formato de listas de adjacência.
-  - Exemplo:
-    ```java
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Integer, List<Integer>> entry : adjacencia.entrySet()) {
-            sb.append(entry.getKey()).append(" -> ").append(entry.getValue()).append("\n");
-        }
-        return sb.toString();
-    }
-    ```
-
----
-
-### 4. **`model.estrutura.grafo.No`**
-
-Representa os nós do grafo.
-
-#### Atributos:
-- `int valor`: Representa o valor armazenado no nó.
-
-#### Métodos principais:
-- **Construtor**:
-  - Inicializa o nó com um valor inteiro.
-  
----
-
-## Fluxo de Execução
-
-1. **Adição de Arestas**:
-   - São criadas arestas entre nós, permitindo que o grafo se construa dinamicamente.
-   
-2. **Remoção de Arestas**:
-   - Permite remover conexões entre os nós, alterando a estrutura do grafo.
-
-3. **Exibição do Grafo**:
-   - O grafo é impresso com suas listas de adjacência, mostrando quais nós estão conectados.
-
----
-
-## Exemplo de Uso
-
-### Entrada:
+#### Código:
 ```java
-GrafoLista<Integer> g = new GrafoLista<>();
-g.adicionarAresta(0, 1);
-g.adicionarAresta(1, 2);
-g.adicionarAresta(3, 4);
-System.out.println(g.toString());
-g.removerAresta(1, 2);
-System.out.println(g.toString());
+public void removerAresta(T origem, T destino) {
+    if (!mapa.containsKey(origem) || !mapa.containsKey(destino)) return;
+    
+    mapa.get(origem).remove(destino);
+    mapa.get(destino).remove(origem);
+}
 ```
 
 ## Criadora
